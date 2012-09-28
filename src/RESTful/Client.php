@@ -4,49 +4,58 @@ namespace RESTful;
 
 use RESTful\Exceptions\HTTPError;
 use RESTful\Settings;
-use Httpful\Request;
 
 class Client
 {    
-    public function __construct($request_class = null)
+    public function __construct($settings_class, $request_class = null)
     {
-        $this->request_class = $request_class == null ? 'Request' : $request_class;
+        $this->request_class = $request_class == null ? '\Httpful\Request' : $request_class;
+        $this->settings_class = $settings_class; 
     }
     
     public function get($uri)
     {
-        $url = Settings::$url_root . $uri;
-        $request = \Httpful\Request::get($url);
+    	$settings_class = $this->settings_class;
+        $url = $settings_class::$url_root . $uri;
+        $request_class = $this->request_class;
+        $request = $request_class::get($url);
         return $this->_op($request);
     }    
     
     public function post($uri, $payload)
     {
-        $url = Settings::$url_root . $uri;
-        $request = Request::post($url, $payload, 'json');
+    	$settings_class = $this->settings_class;
+        $url = $settings_class::$url_root . $uri;
+        $request_class = $this->request_class;
+        $request = $request_class::post($url, $payload, 'json');
         return $this->_op($request);
     }
     
     public function put($uri, $payload)
     {
-        $url = Settings::$url_root . $uri;
-        $request = Request::put($url, $payload, 'json');
+    	$settings_class = $this->settings_class;
+        $url = $settings_class::$url_root . $uri;
+        $request_class = $this->request_class;
+        $request = $request_class::put($url, $payload, 'json');
         return $this->_op($request);
     }
     
     public function delete($uri)
     {
-        $url = Settings::$url_root . $uri;
-        $request = Request::delete($url);
+    	$settings_class = $this->settings_class;
+        $url = $settings_class::$url_root . $uri;
+        $request_class = $this->request_class;
+        $request = $request_class::delete($url);
         return $this->_op($request);
     }
     
     private function _op($request)
     {
-        $user_agent = 'balanced-php/' . Settings::VERSION;
+    	$settings_class = $this->settings_class;
+        $user_agent = $settings_class::$agent . '/' . $settings_class::$version;
         $request->headers['User-Agent'] = $user_agent; 
-        if (Settings::$api_key != null)
-            $request = $request->authenticateWith(Settings::$api_key , '');
+        if ($settings_class::$api_key != null)
+            $request = $request->authenticateWith($settings_class::$api_key , '');
         $request->expects('json');
         $response = $request->sendIt();
         if ($response->hasErrors() || $response->code == 300)

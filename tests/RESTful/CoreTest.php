@@ -12,6 +12,16 @@ use RESTful\Fields;
 use RESTful\Query;
 use RESTful\Page;
 
+class Settings
+{
+	public static $url_root = 'http://api.example.com';
+	
+	public static $agent = 'example-php';
+	
+	public static $version = '0.1.0';
+	
+	public static $api_key = null;
+}
 
 class Resource extends \RESTful\Resource
 {
@@ -21,7 +31,7 @@ class Resource extends \RESTful\Resource
 
 	public static function init()
 	{
-		self::$_client = new Client();
+		self::$_client = new Client(Settings);
 		self::$_registry = new Registry();
 		self::$f = self::$fields = new Fields();
 	}

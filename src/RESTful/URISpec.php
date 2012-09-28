@@ -20,7 +20,7 @@ class URISpec
     
     public function match($uri)
     {
-        $parts = explode('/', $uri);
+        $parts = explode('/', rtrim($uri,"/"));
         
         // collection
         if ($parts[count($parts) - 1] == $this->name)
