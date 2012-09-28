@@ -8,5 +8,5 @@ namespace RESTful;
  */
 class Settings
 {
-    const VERSION = '0.6.6';    
+    const VERSION = '0.1.0';    
 }
