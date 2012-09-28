@@ -70,7 +70,7 @@ abstract class Resource
         foreach ($fields as $key => $val) {
             // nested uri
             if ((strlen($key) - 3) == strrpos($key, 'uri', 0) && $key != 'uri') {
-                $result = self::$_registry->match($val);
+                $result = self::getRegistry()->match($val);
                 if ($result != null) {
                     $name = substr($key, 0, -4);
                     $class = $result['class'];
@@ -89,7 +89,7 @@ abstract class Resource
             }
             // nested
             else if (is_object($val) && property_exists($val, 'uri')) {
-                $result = self::$_registry->match($val->uri);
+                $result = self::getRegistry()->match($val->uri);
                 if ($result != null) {
                     $class = $result['class'];
                     if ($result['collection'])
@@ -98,6 +98,17 @@ abstract class Resource
                         $this->$key = new $class($val);
                     continue;
                 }
+            }
+            else if (is_array($val) && array_key_exists('uri', $val)) {
+            	$result = self::getRegistry()->match($val['uri']);
+            	if ($result != null) {
+            		$class = $result['class'];
+            		if ($result['collection'])
+            			$this->$key = new Collection($class, $val['uri'], $val);
+            		else
+            			$this->$key = new $class($val);
+            		continue;
+            	}
             }
 
             // default

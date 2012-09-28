@@ -53,12 +53,25 @@ class A extends Resource
     
     public static function init()
     {
-        self::$_uri_spec = new URISpec('as', 'id', '/root');
+        self::$_uri_spec = new URISpec('as', 'id', '/');
         self::$_registry->add(get_called_class());
     }
 }
 
 A::init();
+
+class B extends Resource
+{
+	protected static $_uri_spec = null;
+
+	public static function init()
+	{
+		self::$_uri_spec = new URISpec('bs', 'id', '/');
+		self::$_registry->add(get_called_class());
+	}
+}
+
+B::init();
 
 class URISpecTest extends \PHPUnit_Framework_TestCase
 {
@@ -198,5 +211,21 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $query = A::query();
         $this->assertEquals(get_class($query), 'RESTful\Query');
+    }
+    
+    function testObjectify()
+    {
+    	$a = new A(array(
+    	    'uri' => '/as/123',
+    		'field1' => 123,
+    		'b' => array(
+    	        'uri' => '/bs/321',
+    			'field2' => 321
+    		))
+    	);
+    	$this->assertEquals(get_class($a), 'RESTful\Test\A');
+    	$this->assertEquals($a->field1, 123);
+    	$this->assertEquals(get_class($a->b), 'RESTful\Test\B');
+    	$this->assertEquals($a->b->field2, 321);
     }
 }
