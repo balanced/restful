@@ -7,10 +7,11 @@ use RESTful\Settings;
 
 class Client
 {    
-    public function __construct($settings_class, $request_class = null)
+    public function __construct($settings_class, $request_class = null, $convert_error = null)
     {
         $this->request_class = $request_class == null ? '\Httpful\Request' : $request_class;
-        $this->settings_class = $settings_class; 
+        $this->settings_class = $settings_class;
+        $this->convert_error = $convert_error;
     }
     
     public function get($uri)
@@ -58,8 +59,13 @@ class Client
             $request = $request->authenticateWith($settings_class::$api_key , '');
         $request->expects('json');
         $response = $request->sendIt();
-        if ($response->hasErrors() || $response->code == 300)
-            throw new HTTPError($response);
+        if ($response->hasErrors() || $response->code == 300) {
+            if ($this->convert_error != null)
+                $error = call_user_func($this->convert_error, $response);
+            else
+                $error = new HTTPError($response);
+            throw $error;
+        }
         return $response; 
     }
 }
