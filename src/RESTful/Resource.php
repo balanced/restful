@@ -128,6 +128,16 @@ abstract class Resource
     
     public static function get($uri)
     {
+        # id
+        if (strncmp($uri, '/', 1)) {
+            $uri_spec = self::getURISpec();
+            if ($uri_spec == null || $uri_spec->collection_uri == null) {
+                $msg = sprintf('Cannot get %s resources by id %s', $class, $uri);
+                throw new \LogicException($msg);
+            }
+            $uri = $uri_spec->collection_uri . '/' . $uri;
+        }
+
         $response = self::getClient()->get($uri);
         $class = get_called_class();
         return new $class($response->body);
