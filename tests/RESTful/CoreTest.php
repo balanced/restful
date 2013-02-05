@@ -14,45 +14,45 @@ use RESTful\Page;
 
 class Settings
 {
-	public static $url_root = 'http://api.example.com';
-	
-	public static $agent = 'example-php';
-	
-	public static $version = '0.1.0';
-	
-	public static $api_key = null;
+    public static $url_root = 'http://api.example.com';
+    
+    public static $agent = 'example-php';
+    
+    public static $version = '0.1.0';
+    
+    public static $api_key = null;
 }
 
 class Resource extends \RESTful\Resource
 {
-	public static $fields, $f;
-	 
-	protected static $_client, $_registry, $_uri_spec;
+    public static $fields, $f;
+     
+    protected static $_client, $_registry, $_uri_spec;
 
-	public static function init()
-	{
-		self::$_client = new Client(Settings);
-		self::$_registry = new Registry();
-		self::$f = self::$fields = new Fields();
-	}
+    public static function init()
+    {
+        self::$_client = new Client(Settings);
+        self::$_registry = new Registry();
+        self::$f = self::$fields = new Fields();
+    }
 
-	public static function getClient()
-	{
-		$class = get_called_class();
-		return $class::$_client;
-	}
+    public static function getClient()
+    {
+        $class = get_called_class();
+        return $class::$_client;
+    }
 
-	public static function getRegistry()
-	{
-		$class = get_called_class();
-		return $class::$_registry;
-	}
+    public static function getRegistry()
+    {
+        $class = get_called_class();
+        return $class::$_registry;
+    }
 
-	public static function getURISpec()
-	{
-		$class = get_called_class();
-		return $class::$_uri_spec;
-	}
+    public static function getURISpec()
+    {
+        $class = get_called_class();
+        return $class::$_uri_spec;
+    }
 }
 
 Resource::init();
@@ -72,13 +72,13 @@ A::init();
 
 class B extends Resource
 {
-	protected static $_uri_spec = null;
+    protected static $_uri_spec = null;
 
-	public static function init()
-	{
-		self::$_uri_spec = new URISpec('bs', 'id', '/');
-		self::$_registry->add(get_called_class());
-	}
+    public static function init()
+    {
+        self::$_uri_spec = new URISpec('bs', 'id', '/');
+        self::$_registry->add(get_called_class());
+    }
 }
 
 B::init();
@@ -225,17 +225,17 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     
     function testObjectify()
     {
-    	$a = new A(array(
-    	    'uri' => '/as/123',
-    		'field1' => 123,
-    		'b' => array(
-    	        'uri' => '/bs/321',
-    			'field2' => 321
-    		))
-    	);
-    	$this->assertEquals(get_class($a), 'RESTful\Test\A');
-    	$this->assertEquals($a->field1, 123);
-    	$this->assertEquals(get_class($a->b), 'RESTful\Test\B');
-    	$this->assertEquals($a->b->field2, 321);
+        $a = new A(array(
+            'uri' => '/as/123',
+            'field1' => 123,
+            'b' => array(
+                'uri' => '/bs/321',
+                'field2' => 321
+            ))
+        );
+        $this->assertEquals(get_class($a), 'RESTful\Test\A');
+        $this->assertEquals($a->field1, 123);
+        $this->assertEquals(get_class($a->b), 'RESTful\Test\B');
+        $this->assertEquals($a->b->field2, 321);
     }
 }

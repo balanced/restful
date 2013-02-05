@@ -14,8 +14,12 @@ class URISpec
         if (!is_array($idNames))
             $idNames = array($idNames);
         $this->idNames = $idNames;
-        if ($root != null)
-            $this->collection_uri = $root . '/' . $name; 
+        if ($root != null) {
+            if ($root == '' || substr($root , -1) == '/')
+                $this->collection_uri = $root . $name; 
+            else
+                $this->collection_uri = $root . '/' . $name;
+        }
     }
     
     public function match($uri)

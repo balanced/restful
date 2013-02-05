@@ -16,7 +16,7 @@ class Client
     
     public function get($uri)
     {
-    	$settings_class = $this->settings_class;
+        $settings_class = $this->settings_class;
         $url = $settings_class::$url_root . $uri;
         $request_class = $this->request_class;
         $request = $request_class::get($url);
@@ -25,7 +25,7 @@ class Client
     
     public function post($uri, $payload)
     {
-    	$settings_class = $this->settings_class;
+        $settings_class = $this->settings_class;
         $url = $settings_class::$url_root . $uri;
         $request_class = $this->request_class;
         $request = $request_class::post($url, $payload, 'json');
@@ -34,7 +34,7 @@ class Client
     
     public function put($uri, $payload)
     {
-    	$settings_class = $this->settings_class;
+        $settings_class = $this->settings_class;
         $url = $settings_class::$url_root . $uri;
         $request_class = $this->request_class;
         $request = $request_class::put($url, $payload, 'json');
@@ -43,7 +43,7 @@ class Client
     
     public function delete($uri)
     {
-    	$settings_class = $this->settings_class;
+        $settings_class = $this->settings_class;
         $url = $settings_class::$url_root . $uri;
         $request_class = $this->request_class;
         $request = $request_class::delete($url);
@@ -52,7 +52,7 @@ class Client
     
     private function _op($request)
     {
-    	$settings_class = $this->settings_class;
+        $settings_class = $this->settings_class;
         $user_agent = $settings_class::$agent . '/' . $settings_class::$version;
         $request->headers['User-Agent'] = $user_agent; 
         if ($settings_class::$api_key != null)

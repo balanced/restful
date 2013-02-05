@@ -7,8 +7,6 @@ abstract class Resource
     protected $_collection_uris,
               $_member_uris;
     
-    public abstract static function init();
-    
     public static function getClient()
     {
         $class = get_called_class();
@@ -100,15 +98,15 @@ abstract class Resource
                 }
             }
             else if (is_array($val) && array_key_exists('uri', $val)) {
-            	$result = self::getRegistry()->match($val['uri']);
-            	if ($result != null) {
-            		$class = $result['class'];
-            		if ($result['collection'])
-            			$this->$key = new Collection($class, $val['uri'], $val);
-            		else
-            			$this->$key = new $class($val);
-            		continue;
-            	}
+                $result = self::getRegistry()->match($val['uri']);
+                if ($result != null) {
+                    $class = $result['class'];
+                    if ($result['collection'])
+                        $this->$key = new Collection($class, $val['uri'], $val);
+                    else
+                        $this->$key = new $class($val);
+                    continue;
+                }
             }
 
             // default
