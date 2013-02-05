@@ -31,7 +31,7 @@ class Resource extends \RESTful\Resource
 
     public static function init()
     {
-        self::$_client = new Client(Settings);
+        self::$_client = new Client('Settings');
         self::$_registry = new Registry();
         self::$f = self::$fields = new Fields();
     }
