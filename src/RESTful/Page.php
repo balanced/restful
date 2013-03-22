@@ -5,26 +5,26 @@ namespace RESTful;
 class Page
 {
     public $resource,
-           $total,
-           $items,
-           $offset,
-           $limit;
-    
+        $total,
+        $items,
+        $offset,
+        $limit;
+
     private $_first_uri,
-            $_previous_uri,
-            $_next_uri,
-            $_last_uri;
+        $_previous_uri,
+        $_next_uri,
+        $_last_uri;
 
     public function __construct($resource, $uri, $data = null)
     {
-        $this->resource = $resource; 
+        $this->resource = $resource;
         if ($data == null) {
             $client = $resource::getClient();
             $data = $client->get($uri)->body;
         }
         $this->total = $data->total;
         $this->items = array_map(
-            function($x) use ($resource) {
+            function ($x) use ($resource) {
                 return new $resource($x);
             },
             $data->items);
@@ -43,8 +43,10 @@ class Page
 
     public function next()
     {
-        if (!$this->hasNext())
+        if (!$this->hasNext()) {
             return null;
+        }
+
         return new Page($this->resource, $this->_next_uri);
     }
 
