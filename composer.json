@@ -4,7 +4,7 @@
     "homepage": "http://github.com/bninja/restful",
     "license": "MIT",
     "keywords": ["http", "api", "client", "rest"],
-    "version": "0.1.6",
+    "version": "0.1.7",
     "authors": [
     ],
     "require": {
