@@ -15,18 +15,18 @@ use RESTful\Page;
 class Settings
 {
     public static $url_root = 'http://api.example.com';
-    
+
     public static $agent = 'example-php';
-    
+
     public static $version = '0.1.0';
-    
+
     public static $api_key = null;
 }
 
 class Resource extends \RESTful\Resource
 {
     public static $fields, $f;
-     
+
     protected static $_client, $_registry, $_uri_spec;
 
     public static function init()
@@ -60,7 +60,7 @@ Resource::init();
 class A extends Resource
 {
     protected static $_uri_spec = null;
-    
+
     public static function init()
     {
         self::$_uri_spec = new URISpec('as', 'id', '/');
@@ -85,36 +85,36 @@ B::init();
 
 class URISpecTest extends \PHPUnit_Framework_TestCase
 {
-    function testNoRoot()
+    public function testNoRoot()
     {
         $uri_spec = new URISpec('grapes', 'seed');
         $this->assertEquals($uri_spec->collection_uri, null);
-        
+
         $result = $uri_spec->match('/some/raisins');
         $this->assertEquals($result, null);
-        
+
         $result = $uri_spec->match('/some/grapes');
         $this->assertEquals($result, array('collection' => true));
-        
+
         $result = $uri_spec->match('/some/grapes/1234');
         $expected = array(
             'collection' => false,
             'ids' => array('seed' => '1234')
-            ); 
+            );
         $this->assertEquals($expected, $result);
     }
-    
-    function testSingleId()
+
+    public function testSingleId()
     {
         $uri_spec = new URISpec('tomatoes', 'stem', '/v1');
         $this->assertNotEquals($uri_spec->collection_uri, null);
-        
+
         $result = $uri_spec->match('/some/tomatoes/that/are/green');
         $this->assertEquals($result, null);
-        
+
         $result = $uri_spec->match('/some/tomatoes');
         $this->assertEquals($result, array('collection' => true));
-        
+
         $result = $uri_spec->match('/some/tomatoes/4321');
         $expected = array(
             'collection' => false,
@@ -122,18 +122,18 @@ class URISpecTest extends \PHPUnit_Framework_TestCase
             );
         $this->assertEquals($expected, $result);
     }
-    
-    function testMultipleIds()
+
+    public function testMultipleIds()
     {
         $uri_spec = new URISpec('tomatoes', array('stem', 'root'), '/v1');
         $this->assertNotEquals($uri_spec->collection_uri, null);
-        
+
         $result = $uri_spec->match('/some/tomatoes/that/are/green');
         $this->assertEquals($result, null);
-        
+
         $result = $uri_spec->match('/some/tomatoes');
         $this->assertEquals($result, array('collection' => true));
-        
+
         $result = $uri_spec->match('/some/tomatoes/4321/1234');
         $expected = array(
             'collection' => false,
@@ -145,7 +145,7 @@ class URISpecTest extends \PHPUnit_Framework_TestCase
 
 class QueryTest extends \PHPUnit_Framework_TestCase
 {
-    function testParse()
+    public function testParse()
     {
         $uri = '/some/uri?field2=123&sort=field5%2Cdesc&limit=101&field3.field4%5Bcontains%5D=hi';
         $query = new Query('Resource', $uri);
@@ -159,7 +159,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($query->size, 101);
     }
 
-    function testBuild()
+    public function testBuild()
     {
         $query = new Query('Resource', '/some/uri');
         $query->filter(Resource::$f->name->eq('Wonka Chocs'))
@@ -189,7 +189,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 
 class PageTest extends \PHPUnit_Framework_TestCase
 {
-    function testConstruct()
+    public function testConstruct()
     {
         $data = new \stdClass();
         $data->first_uri = 'some/first/uri';
@@ -206,7 +206,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
             '/some/uri',
             $data
             );
-        
+
         $this->assertEquals($page->resource, 'Resource');
         $this->assertEquals($page->total, 101);
         $this->assertEquals($page->items, array());
@@ -217,13 +217,13 @@ class PageTest extends \PHPUnit_Framework_TestCase
 
 class ResourceTest extends \PHPUnit_Framework_TestCase
 {
-    function testQuery()
+    public function testQuery()
     {
         $query = A::query();
         $this->assertEquals(get_class($query), 'RESTful\Query');
     }
-    
-    function testObjectify()
+
+    public function testObjectify()
     {
         $a = new A(array(
             'uri' => '/as/123',

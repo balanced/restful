@@ -4,7 +4,7 @@ namespace RESTful;
 
 /**
  * Settings.
- * 
+ *
  */
 class Settings
 {
