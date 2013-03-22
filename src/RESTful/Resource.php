@@ -58,7 +58,16 @@ abstract class Resource
             E_USER_NOTICE);
         return null;
     }
-    
+
+    public function __isset($name)
+    {
+        if (array_key_exists($name, $this->_collection_uris) || array_key_exists($name, $this->_member_uris)) {
+            return true;
+        }
+
+        return false;
+    }
+
     protected function _objectify($fields)
     {
         // initialize uris
