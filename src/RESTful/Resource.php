@@ -145,6 +145,8 @@ abstract class Resource
 
     public static function get($uri)
     {
+        $class = get_called_class();
+
         # id
         if (strncmp($uri, '/', 1)) {
             $uri_spec = self::getURISpec();
@@ -156,7 +158,6 @@ abstract class Resource
         }
 
         $response = self::getClient()->get($uri);
-        $class = get_called_class();
 
         return new $class($response->body);
     }
