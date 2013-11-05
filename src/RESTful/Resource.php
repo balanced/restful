@@ -46,7 +46,7 @@ abstract class Resource
             return $this->$name;
         } // member uri
         else if (array_key_exists($name, $this->_member_uris)) {
-            $result = $this->$_collection_uris[$name];
+            $result = $this->_collection_uris[$name];
             $response = self::getClient() . get($result['uri']);
             $class = $result['class'];
             $this->$name = new $class($response->body);
