@@ -1,7 +1,7 @@
 {
-    "name": "bninja/restful",
+    "name": "balanced/restful",
     "description": "Library for writing RESTful PHP clients.",
-    "homepage": "http://github.com/bninja/restful",
+    "homepage": "http://github.com/balanced/restful",
     "license": "MIT",
     "keywords": ["http", "api", "client", "rest"],
     "version": "0.1.8",

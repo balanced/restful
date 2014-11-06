@@ -2,7 +2,7 @@
 
 Library for writing RESTful PHP clients.
 
-[![Build Status](https://secure.travis-ci.org/bninja/restful.png)](http://travis-ci.org/bninja/restful)
+[![Build Status](https://secure.travis-ci.org/balanced/restful.png)](http://travis-ci.org/balanced/restful)
 
 The design of this library was heavily influenced by [Httpful](https://github.com/nategood/httpful). 
 
@@ -13,7 +13,7 @@ The design of this library was heavily influenced by [Httpful](https://github.co
     
 ## Issues
 
-Please use appropriately tagged github [issues](https://github.com/bninja/restful/issues) to request features or report bugs.
+Please use appropriately tagged github [issues](https://github.com/balanced/restful/issues) to request features or report bugs.
 
 ## Installation
 
@@ -29,7 +29,7 @@ Add this to your `composer.json`:
 
     {
         "require": {
-            "bninja/restful": "*"
+            "balanced/restful": "*"
         }
     }
     
@@ -53,9 +53,9 @@ Download an Httpful [phar](http://php.net/manual/en/book.phar.php) file, which a
     
     $ curl -s -L -o httpful.phar https://github.com/downloads/nategood/httpful/httpful.phar
 
-Download a RESTful [phar](http://php.net/manual/en/book.phar.php) file, which are all [here](https://github.com/bninja/restful/downloads):
+Download a RESTful [phar](http://php.net/manual/en/book.phar.php) file, which are all [here](https://github.com/balanced/restful/downloads):
 
-    $ curl -s -L -o restful.phar https://github.com/bninja/restful/downloads/restful-{VERSION}.phar
+    $ curl -s -L -o restful.phar https://github.com/balanced/restful/downloads/restful-{VERSION}.phar
     
 And then `include` both:
 
@@ -73,8 +73,8 @@ Download [Httpful](https://github.com/nategood/httpful) source:
 
 Download the RESTful source:
 
-    $ curl -s -L -o restful.zip https://github.com/bninja/restful/zipball/master
-    $ unzip restful.zip; mv bninja-restful-* restful; rm restful.zip
+    $ curl -s -L -o restful.zip https://github.com/balanced/restful/zipball/master
+    $ unzip restful.zip; mv balanced-restful-* restful; rm restful.zip
 
 And then `require` both bootstrap files:
 
@@ -97,7 +97,7 @@ And then `require` both bootstrap files:
 2. Increment minor `VERSION` in `src/RESTful/Settings` and `composer.json` (`git commit -am 'v{VERSION} release'`)
 3. Tag it (`git tag -a v{VERSION} -m 'v{VERSION} release'`)
 4. Push the tag (`git push --tag`)
-5. [Packagist](http://packagist.org/packages/bninja/restful) will see the new tag and take it from there
+5. [Packagist](http://packagist.org/packages/balanced/restful) will see the new tag and take it from there
 6. Build (`build-phar`) and upload a [phar](http://php.net/manual/en/book.phar.php) file 
 
 ## Contributing
